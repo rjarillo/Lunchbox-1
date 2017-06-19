@@ -83,8 +83,8 @@ static void backtrace_(std::ostream& os, const size_t skipFrames)
 {
 #ifdef _WIN32
     // Sym* functions from DbgHelp are not thread-safe...
-    static Lock lock;
-    ScopedMutex<> mutex(lock);
+    static std::mutex lock;
+    ScopedWrite mutex(lock);
 
     typedef USHORT(WINAPI * CaptureStackBackTraceType)(ULONG, ULONG, PVOID*,
                                                        PULONG);

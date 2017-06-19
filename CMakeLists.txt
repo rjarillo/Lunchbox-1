@@ -44,6 +44,16 @@ if(NOT LUNCHBOX_BUILD_V2_API)
   list(APPEND LUNCHBOX_DEPENDENT_LIBRARIES Servus)
 endif()
 
+if(MSVC)
+  add_definitions(-DHAVE_STRUCT_TIMESPEC)# -D_WIN64 -D_AMD64_)
+  if(CMAKE_CL_64)
+    add_definitions(-D_WIN64 -D_AMD64_)
+  else()
+    add_definitions(-D_X86_)
+  endif()
+  set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -w")
+endif()
+
 add_definitions("-DCMAKE_INSTALL_PREFIX=${CMAKE_INSTALL_PREFIX}")
 
 include(pthreads/CMakeLists.txt)
